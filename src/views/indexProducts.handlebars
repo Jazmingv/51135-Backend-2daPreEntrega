@@ -1,0 +1,25 @@
+{{#if isValid}}
+<div>
+	{{#each docs}}
+	<div>
+		<p>Title: {{this.title}} &nbsp; Category: {{this.category}}</p>
+		<p>Description: {{this.description}} &nbsp; Price: {{this.price}}</p>
+	</div>
+	<br />
+	{{/each}}
+</div>
+<br />
+<div>
+	{{#if hasPrevPage}}
+	<a href={{this.prevLink}}><< Prev</a>
+	{{/if}}
+	&nbsp;
+	{{this.page}}
+	&nbsp;
+	{{#if hasNextPage}}
+	<a href={{this.nextLink}}>Next >></a>
+	{{/if}}
+</div>
+{{else}}
+<h1>No more products</h1>
+{{/if}}

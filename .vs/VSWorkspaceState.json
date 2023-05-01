@@ -5,8 +5,9 @@
     "\\src\\controllers",
     "\\src\\models",
     "\\src\\routes",
-    "\\src\\services"
+    "\\src\\views",
+    "\\src\\views\\layouts"
   ],
-  "SelectedNode": "\\src\\services\\productServices.js",
+  "SelectedNode": "\\src\\views\\indexProducts.handlebars",
   "PreviewInSolutionExplorer": false
 }
