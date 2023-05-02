@@ -78,7 +78,7 @@ export const increaseQuantityProduct = async (req, res) => {
         let cart = await Carts.findOne({ "_id": cartID });
         console.log(JSON.stringify(cart, null, '\t'));
 
-        let product = cart.products.findOne({ _id: productID });
+        let product = cart.products.find({ _id: productID });
 
         if (!product) {
             cart.products.push({ quantity: 1, product: productID });
