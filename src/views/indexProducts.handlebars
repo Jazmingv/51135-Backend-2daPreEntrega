@@ -11,19 +11,17 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each docs}}
+			{{#each product}}
+			<tr>{{this.title}}</tr>
+			<tr>{{this.description}}</tr>
+			<tr>{{this.category}}</tr>
+			<tr>{{this.price}}</tr>
 			<tr>
-				<td>{{this.title}}</td>
-				<td>{{this.description}}</td>
-				<td>{{this.category}}</td>
-				<td>{{this.price}}</td>
-				<td>
-					<form action="http://localhost:8080/api/carts/{{result.cart}}/products/{{this._id}}">
-						<button type="submit">
-							Add to cart
-						</button>
-					</form>
-				</td>
+				<form action="/api/carts/{{cart._id}}/products/{{this._id}}" method="POST">
+					<button type="submit">
+						Add to cart
+					</button>
+				</form>
 			</tr>
 			{{/each}}
 		</tbody>
@@ -44,6 +42,3 @@
 {{else}}
 <h1>No more products</h1>
 {{/if}}
-
-
-<script src="../routes/carts.route.js"></script>
