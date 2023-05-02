@@ -4,7 +4,7 @@ import { createCart } from "./carts.controller.js";
 let currentCart;
 
 //GETALL
-const getAllProducts = async (req, res) => {
+export const getAllProducts = async (req, res) => {
     try {
         const { limit, page, sort, _id, title, category } = req.query;
 
@@ -43,4 +43,47 @@ const getAllProducts = async (req, res) => {
     }
 };
 
-export default getAllProducts;
+//GETBYID
+export const getProductByID = async (req, res) => {
+    try {
+        const product = await Products.findById(req.params.id);
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+//CREATE
+export const createProduct = async (req, res) => {
+
+    const newProduct = new Products(req.body);
+
+    try {
+        const savedProduct = await newProduct.save();
+        res.status(200).json(savedProduct);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+//UPDATE
+export const updateProduct = async (req, res) => {
+    try {
+        const updatedProduct = await Products.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        );
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+export const deleteProduct = async (req, res) => {
+    try {
+        await Products.findByIdAndDelete(req.params.id);
+        res.status(200).json("Succesfully deleted product");
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
