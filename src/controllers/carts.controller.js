@@ -7,10 +7,9 @@ let currentCart;
 //if (!currentCart) { cartController.createCart }
 export const createCart = async (req, res) => {
     const newCart = new Carts();
-
     try {
-        const savedCart = await newCart.save();
-        res.status(200).json(savedCart);
+        currentCart = await newCart.save();
+        res.status(200).json(currentCart);
     } catch (error) {
         res.status(500).json(error);
     }

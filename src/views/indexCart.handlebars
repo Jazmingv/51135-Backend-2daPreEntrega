@@ -1,25 +1,38 @@
 {{#if isValid}}
 <div>
-	{{#each docs}}
-	<div>
-		<p>Nombre: {{this.first_name}} &nbsp; Apellido: {{this.last_name}}</p>
-		<p>Grupo: {{this.group}} &nbsp; Calificación: {{this.grade}}</p>
-	</div>
-	<br />
-	{{/each}}
+	<table>
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Description</th>
+				<th>Category</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each docs}}
+			<tr>
+				<td>{{this.title}}</td>
+				<td>{{this.description}}</td>
+				<td>{{this.category}}</td>
+				<td>{{this.price}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
 </div>
 <br />
 <div>
 	{{#if hasPrevPage}}
-	<a href={{this.prevLink}}><< Anterior</a>
+	<a href={{this.prevLink}}><< Prev</a>
 	{{/if}}
 	&nbsp;
 	{{this.page}}
 	&nbsp;
 	{{#if hasNextPage}}
-	<a href={{this.nextLink}}>Siguiente >></a>
+	<a href={{this.nextLink}}>Next >></a>
 	{{/if}}
 </div>
 {{else}}
-<h1>No hay estudiantes para mostrar</h1>
+<h1>No more products</h1>
 {{/if}}

@@ -1,12 +1,33 @@
 {{#if isValid}}
 <div>
-	{{#each docs}}
-	<div>
-		<p>Title: {{this.title}} &nbsp; Category: {{this.category}}</p>
-		<p>Description: {{this.description}} &nbsp; Price: {{this.price}}</p>
-	</div>
-	<br />
-	{{/each}}
+	<table>
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Description</th>
+				<th>Category</th>
+				<th>Price</th>
+				<th>Add to Current Cart</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each docs}}
+			<tr>
+				<td>{{this.title}}</td>
+				<td>{{this.description}}</td>
+				<td>{{this.category}}</td>
+				<td>{{this.price}}</td>
+				<td>
+					<form action="http://localhost:8080/api/carts/{{result.cart}}/products/{{this._id}}">
+						<button type="submit">
+							Add to cart
+						</button>
+					</form>
+				</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
 </div>
 <br />
 <div>
@@ -23,3 +44,6 @@
 {{else}}
 <h1>No more products</h1>
 {{/if}}
+
+
+<script src="../routes/carts.route.js"></script>
