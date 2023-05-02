@@ -30,9 +30,7 @@ export const getAllProducts = async (req, res) => {
         result.isValid = !(page <= 0 || page > result.totalPages);
         result.status = "success";
 
-        console.log(result.isValid);
-
-        res.render('./indexProducts', { products: result.docs });
+        res.status(200).render("./indexProducts", result);
     } catch (error) {
         console.log(error);
         res.status(500).send("Couldn't render products view");

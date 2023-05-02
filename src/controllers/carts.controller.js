@@ -1,7 +1,4 @@
 import Carts from "../models/carts.model.js";
-import Products from "../models/products.model.js";
-
-let currentCart;
 
 //CREATE CART
 //if (!currentCart) { cartController.createCart }
@@ -9,7 +6,7 @@ export const createCart = async (req, res) => {
     const newCart = new Carts();
     try {
         currentCart = await newCart.save();
-        res.status(200).json(currentCart);
+        res.status(200).send(currentCart);
     } catch (error) {
         console.log(error);
         res.status(500).send("Couldn't create cart, please try again");

@@ -11,19 +11,21 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each product}}
-			<tr>{{this.title}}</tr>
-			<tr>{{this.description}}</tr>
-			<tr>{{this.category}}</tr>
-			<tr>{{this.price}}</tr>
+			{{#each docs}}
 			<tr>
-				<form action="/api/carts/{{cart._id}}/products/{{this._id}}" method="POST">
-					<button type="submit">
-						Add to cart
-					</button>
-				</form>
-			</tr>
-			{{/each}}
+				<td>{{this.title}}</td>
+				<td>{{this.description}}</td>
+		<td>{{this.category}}</td>
+		<td>{{this.price}}</td>
+		<td>
+			<form action="/api/carts/64516f1ab605f315414dac21/products/{{this._id}}" method="post">
+				<button type="submit">
+					Add to cart
+				</button>
+			</form>
+		</td>
+		</tr>
+		{{/each}}
 		</tbody>
 	</table>
 </div>
