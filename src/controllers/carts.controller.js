@@ -1,4 +1,5 @@
 import Carts from "../models/carts.model.js";
+import Products from "../models/products.model.js";
 
 //CREATE CART
 //if (!currentCart) { cartController.createCart }
@@ -57,6 +58,19 @@ export const deleteProduct = async (req, res) => {
     }
 };
 
+//GET ALL CARTS
+export const getCarts = async (req, res) => {
+    try {
+        let cart = await Carts.find().populate("Products", "product");
+        cart = console.log(JSON.stringify(cart, null, '\t'));
+
+        res.status(200).send(cart);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Couldn't get products in cart");
+    }
+};
+
 //GET PRODUCTS
 export const getProducts = async (req, res) => {
     try {
@@ -65,7 +79,7 @@ export const getProducts = async (req, res) => {
         let cart = await Carts.findOne({ _id: cartID });
         console.log(JSON.stringify(cart, null, '\t'));
 
-        res.status(200).json(cart);
+        res.status(200).render("./indexCart", "");
     } catch (error) {
         console.log(error);
         res.status(500).send("Couldn't get products in cart");

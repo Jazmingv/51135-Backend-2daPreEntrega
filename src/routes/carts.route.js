@@ -3,6 +3,9 @@ import * as cartController from "../controllers/carts.controller.js";
 
 const CartRouter = express.Router();
 
+//GET ALL CARTS
+CartRouter.get("/", cartController.getCarts);
+
 //DELETE ALL PRODUCTS
 CartRouter.delete("/:cid/", cartController.deleteAllProducts);
 

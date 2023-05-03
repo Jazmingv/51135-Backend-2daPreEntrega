@@ -1,4 +1,3 @@
-{{#if isValid}}
 <div>
 	<table>
 		<thead>
@@ -10,7 +9,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each docs}}
+			{{#each products}}
 			<tr>
 				<td>{{this.title}}</td>
 				<td>{{this.description}}</td>
@@ -33,6 +32,3 @@
 	<a href={{this.nextLink}}>Next >></a>
 	{{/if}}
 </div>
-{{else}}
-<h1>No more products</h1>
-{{/if}}
