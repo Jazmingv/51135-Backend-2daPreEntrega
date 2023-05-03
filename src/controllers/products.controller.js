@@ -1,36 +1,44 @@
 import Products from "../models/products.model.js";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 //GETALL
 export const getAllProducts = async (req, res) => {
     try {
-        let { limit, page, sort, _id, title, category } = req.query;
+        let { limit = 10, page = 1, sort, _id, title, category } = req.query;
 
         let filter = {};
         _id && (filter._id = _id);
         title && (filter.title = title);
         category && (filter.category = category);
 
-        if (sort === "asc") { sort = 1 }
-        else if (sort === "desc") { sort = -1 }
-        else if (sort !== "asc" || sort !== "desc") { sort = 0 };
         let options = {
-            limit: parseInt(limit) || 10,
-            page: parseInt(page) || 1,
-            sort: sort
+            limit: parseInt(limit),
+            page: parseInt(page),
+            sort: sort && { price: sort === "asc" ? 1 : -1 },
         };
 
-        if (category != "swimwear" && category != "pajamas" && category != "sets" && category != "dresses") {
-            category = null;
+        //if (category != "swimwear" && category != "pajamas" && category != "sets" && category != "dresses") {
+        //    category = null;
+        //}
+
+        let result = await Products.paginate(filter, options);
+        const obj = result.docs.map(prod => prod);
+
+        const responseObj = {
+            status: "success",
+            payload: obj,
+            totalPages: result.totalPages,
+            prevPage: result.prevPage,
+            nextPage: result.nextPage,
+            page: result.page,
+            hasPrevPage: result.hasPrevPage,
+            hasNextPage: result.hasNextPage,
+            prevLink: result.hasPrevPage ? `/api/products?page=${result.prevPage}` : '',
+            nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}` : '',
+            isValid: !(page <= 0 || page > result.totalPages)
         }
-
-        let result = await Products.paginate(filter, { options, lean: true });
-
-        result.prevLink = result.hasPrevPage ? `/api/products?page=${result.prevPage}` : '';
-        result.nextLink = result.hasNextPage ? `/api/products?page=${result.nextPage}` : '';
-        result.isValid = !(page <= 0 || page > result.totalPages);
-        result.status = "success";
-
-        res.status(200).render("./indexProducts", result);
+        
+        res.status(200).render("./indexProducts", responseObj);
     } catch (error) {
         console.log(error);
         res.status(500).send("Couldn't render products view");

@@ -61,7 +61,7 @@ export const deleteProduct = async (req, res) => {
 //GET ALL CARTS
 export const getCarts = async (req, res) => {
     try {
-        let cart = await Carts.find().populate("Products", "product");
+        let cart = await Carts.find();
         cart = console.log(JSON.stringify(cart, null, '\t'));
 
         res.status(200).send(cart);
@@ -77,9 +77,29 @@ export const getProducts = async (req, res) => {
         let cartID = req.params.cid;
 
         let cart = await Carts.findOne({ _id: cartID });
-        console.log(JSON.stringify(cart, null, '\t'));
 
-        res.status(200).render("./indexCart", "");
+        let products = await Products.find({ _id: { $in: cart.products } });
+        //console.log(JSON.stringify(products, null, '\t'));
+
+        const data = { // Crea un objeto llamado "data".
+            product: products.map((product, index) => { 
+                    return { //Retorna un objeto con las propiedades requeridas para la vista.
+                        title: product.title, // Título del producto.
+                        description: product.description, // Descripción del producto.
+                        category: product.category, // Categoría del producto.
+                        price: product.price, // Precio del producto.
+                        quantity: cart.products[index].quantity
+                    }
+                }
+            ),
+            hasPrevPage: false, //Propiedad para indicar si existe una página anterior a la actual.
+            hasNextPage: false, //Propiedad para indicar si existe una página posterior a la actual.
+            prevLink: "", //Enlace a la página anterior.
+            nextLink: "", //Enlace a la página siguiente.
+            page: 1 //Número de página actual.
+        }
+
+        res.status(200).render("./indexCart", data);
     } catch (error) {
         console.log(error);
         res.status(500).send("Couldn't get products in cart");
@@ -93,15 +113,18 @@ export const increaseQuantityProduct = async (req, res) => {
         let productID = req.params.pid;
 
         let cart = await Carts.findOne({ "_id": cartID });
+        console.log(cart);
 
-        let productIndex = cart.products.findIndex(prod => prod._id == productID);
+        let productIndex = cart.products.findIndex(prod => prod._id.toString() === productID);
+
+        console.log(`product Index: ${productIndex}`);
 
         if (productIndex !== -1) {
             // Product exists in cart, increase quantity
             cart.products[productIndex].quantity += 1;
         } else {
             // Product doesn't exist in cart, add it
-            cart.products.push({ _id: productID, quantity: 1 });
+            cart.products.push({quantity: 1}, { product: productID } );
         }
 
         let result = await Carts.updateOne({ _id: cartID }, cart);

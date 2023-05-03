@@ -7,6 +7,6 @@
     "\\src\\routes",
     "\\src\\views"
   ],
-  "SelectedNode": "\\src\\controllers\\products.controller.js",
+  "SelectedNode": "\\src\\models\\carts.model.js",
   "PreviewInSolutionExplorer": false
 }

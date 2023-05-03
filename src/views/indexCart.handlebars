@@ -1,34 +1,24 @@
-<div>
-	<table>
+<div class="container">
+	<table class="table">
 		<thead>
 			<tr>
 				<th>Product</th>
 				<th>Description</th>
 				<th>Category</th>
 				<th>Price</th>
+				<th>Quantity</th>
 			</tr>
 		</thead>
 		<tbody>
-			{{#each products}}
+			{{#each product}}
 			<tr>
 				<td>{{this.title}}</td>
 				<td>{{this.description}}</td>
 				<td>{{this.category}}</td>
 				<td>{{this.price}}</td>
+				<td>{{this.quantity}}</td>
 			</tr>
 			{{/each}}
 		</tbody>
 	</table>
-</div>
-<br />
-<div>
-	{{#if hasPrevPage}}
-	<a href={{this.prevLink}}><< Prev</a>
-	{{/if}}
-	&nbsp;
-	{{this.page}}
-	&nbsp;
-	{{#if hasNextPage}}
-	<a href={{this.nextLink}}>Next >></a>
-	{{/if}}
 </div>
